@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hotelki</string>
+    <string name="name_field">Название</string>
+    <string name="desc_field">Добавьте короткое описание</string>
+    <string name="tags_field">Добавь тэги</string>
+    <string name="add">Добавить</string>
+    <string name="select">Все</string>
 </resources>
