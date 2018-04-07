@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/business_button"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_action_name"
         android:title="@string/select"
         app:showAsAction="always"
         />
