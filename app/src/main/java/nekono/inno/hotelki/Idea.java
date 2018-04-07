@@ -1,14 +1,18 @@
 package nekono.inno.hotelki;
 
-public class HotyolkaItem {
-    private String name, description;
-    private int likes, dizlikes;
+/**
+ * Created by ekaterina on 4/8/18.
+ */
 
-    public HotyolkaItem(String name, String description, int likes, int dizlikes) {
+public class Idea {
+    private String name, description;
+    private int likes, dislikes;
+
+    public Idea(String name, String description, int likes, int dizlikes) {
         this.name = name;
         this.description = description;
         this.likes = likes;
-        this.dizlikes = dizlikes;
+        this.dislikes = dizlikes;
     }
 
     public String getName() {
@@ -35,11 +39,11 @@ public class HotyolkaItem {
         this.likes = likes;
     }
 
-    public int getDizlikes() {
-        return dizlikes;
+    public int getDislikes() {
+        return dislikes;
     }
 
-    public void setDizlikes(int dizlikes) {
-        this.dizlikes = dizlikes;
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
     }
 }
