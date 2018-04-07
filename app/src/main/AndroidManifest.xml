@@ -23,9 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PopItemsActivity">
-
-        </activity>
+        <activity android:name=".PopItemsActivity"/>
+        <activity android:name=".IdeaAddActivity"/>
         <activity android:name=".EditMarkerActivity"/>
         <!--Developers should put application credentials here.To obtain them, please register the application
          at https://developer.here.com/develop/mobile-sdks-->

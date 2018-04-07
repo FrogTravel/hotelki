@@ -7,6 +7,7 @@ import com.here.android.mpa.common.ViewObject;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
 import com.here.android.mpa.mapping.MapGesture;
+import com.here.android.mpa.mapping.MapObject;
 import com.here.android.mpa.mapping.MapScreenMarker;
 
 import android.app.Activity;
@@ -113,6 +114,7 @@ public class MapFragmentView {
                                 e.printStackTrace();
                             }
 
+
                             m_mapFragment.getMapGesture()
                                     .addOnGestureListener(new MapGesture.OnGestureListener() {
                                         @Override
@@ -191,7 +193,7 @@ public class MapFragmentView {
 
                                             m_map.addMapObject(m_tap_marker);
 
-                                            Intent intent = new Intent(m_mapFragment.getActivity(), EditMarkerActivity.class);
+                                            Intent intent = new Intent(m_mapFragment.getActivity(), IdeaAddActivity.class);
                                             m_mapFragment.startActivity(intent);
                                             return false;
                                         }
@@ -214,9 +216,11 @@ public class MapFragmentView {
                              */
 
                             m_map.setCenter(new GeoCoordinate(49.258576, -123.008268), Map.Animation.NONE);
-                        } else
 
-                        {
+
+
+
+                        } else {
                             Toast.makeText(m_activity,
                                     "ERROR: Cannot initialize Map with error " + error,
                                     Toast.LENGTH_LONG).show();
