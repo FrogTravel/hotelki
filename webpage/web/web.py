@@ -48,5 +48,6 @@ def dropdb_cmd():
 
 @app.route('/')
 def show():
-	stories = [{'title': 'a', 'likes': 15, 'description': 'lorem ipsum ist dalor'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}]
-	return flask.render_template('index.html', stories=stories)
+	comments = [{'author': 'John Doe', 'content': 'Lorem ipsum'}, {'author': 'Mark', 'content': 'Я люблю кофер'}]
+	stories = [{'title': 'a', 'likes': 15, 'dislikes': 11, 'description': 'lorem ipsum ist dalor'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}]
+	return flask.render_template('index.html', stories=stories, comments=comments)

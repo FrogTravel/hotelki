@@ -1,0 +1,11 @@
+.white-to-color {
+	/*background: linear-gradient(90deg, rgba(255,255,255,100), rgba(171, 79, 1, 100));*/
+}
+
+.color-to-white {
+	/*background: linear-gradient(90deg, rgba(171, 79, 1, 100), rgba(255,255,255,100));*/
+}
+
+.wide-modal {
+	width:50%;
+}
