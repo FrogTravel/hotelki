@@ -1,22 +1,28 @@
 package nekono.inno.hotelki;
 
 import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.common.ViewObject;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
 import com.here.android.mpa.mapping.MapGesture;
+import com.here.android.mpa.mapping.MapScreenMarker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -42,11 +48,17 @@ public class MapFragmentView {
     private MapFragment m_mapFragment;
     private Activity m_activity;
     private Map m_map;
+    private Image m_marker_image;
+    private List<MapScreenMarker> mapScreenMarkers;
+
 
     public MapFragmentView(Activity activity) {
         m_activity = activity;
         initMapFragment();
+
+        mapScreenMarkers = new ArrayList<>();
     }
+
 
     private void initMapFragment() {
         /* Locate the mapFragment UI element */
@@ -92,7 +104,107 @@ public class MapFragmentView {
                             Log.d("Test", "Map is ready");
 
                             m_map = m_mapFragment.getMap();
-                            m_mapFragment.getMapGesture().addOnGestureListener(new MyOnGestureListener());//TODO what is i and b?
+
+                            m_marker_image = new Image();
+
+                            try {
+                                m_marker_image.setImageResource(R.drawable.marker);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            m_mapFragment.getMapGesture()
+                                    .addOnGestureListener(new MapGesture.OnGestureListener() {
+                                        @Override
+                                        public void onPanStart() {
+                                        }
+
+                                        @Override
+                                        public void onPanEnd() {
+                                        /* show toast message for onPanEnd gesture callback */
+
+                                        }
+
+                                        @Override
+                                        public void onMultiFingerManipulationStart() {
+
+                                        }
+
+                                        @Override
+                                        public void onMultiFingerManipulationEnd() {
+
+                                        }
+
+                                        @Override
+                                        public boolean onMapObjectsSelected(List<ViewObject> list) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onTapEvent(PointF pointF) {
+                                        /* show toast message for onPanEnd gesture callback */
+                                            // showMsg("onTapEvent");
+
+
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onDoubleTapEvent(PointF pointF) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public void onPinchLocked() {
+
+                                        }
+
+                                        @Override
+                                        public boolean onPinchZoomEvent(float v, PointF pointF) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public void onRotateLocked() {
+
+                                        }
+
+                                        @Override
+                                        public boolean onRotateEvent(float v) {
+                                        /* show toast message for onRotateEvent gesture callback */
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onTiltEvent(float v) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onLongPressEvent(PointF pointF) {
+                                            showMsg("Long Press");
+
+                                            MapScreenMarker m_tap_marker = new MapScreenMarker(pointF,
+                                                    m_marker_image);
+
+
+                                            m_map.addMapObject(m_tap_marker);
+
+                                            Intent intent = new Intent(m_mapFragment.getActivity(), EditMarkerActivity.class);
+                                            m_mapFragment.startActivity(intent);
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public void onLongPressRelease() {
+
+                                        }
+
+                                        @Override
+                                        public boolean onTwoFingerTapEvent(PointF pointF) {
+                                            return false;
+                                        }
+                                    });
 
                             /*
                              * Map center can be set to a desired location at this point.
@@ -101,7 +213,9 @@ public class MapFragmentView {
                              */
 
                             m_map.setCenter(new GeoCoordinate(49.258576, -123.008268), Map.Animation.NONE);
-                        } else {
+                        } else
+
+                        {
                             Toast.makeText(m_activity,
                                     "ERROR: Cannot initialize Map with error " + error,
                                     Toast.LENGTH_LONG).show();
@@ -112,85 +226,21 @@ public class MapFragmentView {
                 });
             }
         }
+
     }
 
-    private class MyOnGestureListener implements MapGesture.OnGestureListener {
-        @Override
-        public void onPanStart() {
+    private void showMsg(String msg) {
+        final Toast msgToast = Toast.makeText(m_activity, msg, Toast.LENGTH_SHORT);
 
-        }
+        msgToast.show();
 
-        @Override
-        public void onPanEnd() {
-
-        }
-
-        @Override
-        public void onMultiFingerManipulationStart() {
-
-        }
-
-        @Override
-        public void onMultiFingerManipulationEnd() {
-
-        }
-
-        @Override
-        public boolean onMapObjectsSelected(List<ViewObject> list) {
-            return false;
-        }
-
-        @Override
-        public boolean onTapEvent(PointF pointF) {
-            return false;
-        }
-
-        @Override
-        public boolean onDoubleTapEvent(PointF pointF) {
-            return false;
-        }
-
-        @Override
-        public void onPinchLocked() {
-
-        }
-
-        @Override
-        public boolean onPinchZoomEvent(float v, PointF pointF) {
-            return false;
-        }
-
-        @Override
-        public void onRotateLocked() {
-
-        }
-
-        @Override
-        public boolean onRotateEvent(float v) {
-            return false;
-        }
-
-        @Override
-        public boolean onTiltEvent(float v) {
-            return false;
-        }
-
-        @Override
-        public boolean onLongPressEvent(PointF pointF) {
-            Log.d("Test", "Long Press");
-
-            return false;
-        }
-
-        @Override
-        public void onLongPressRelease() {
-
-        }
-
-        @Override
-        public boolean onTwoFingerTapEvent(PointF pointF) {
-            return false;
-        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                msgToast.cancel();
+            }
+        }, 1000);
 
     }
 }
