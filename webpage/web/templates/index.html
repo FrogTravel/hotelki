@@ -13,17 +13,46 @@
       <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
+          
+
           {% block body %}
             {% for story in stories %}
-            <div class="row">
-              <div class="col-sm-4">{{ story.title }}</div>
-              <div class="col-sm-6">{{ story.description }}</div>
-              <div class="col-sm-2">{{ story.likes }}</div>
-            </div>
+              <div class="row" data-toggle="modal" data-target="#myModal{{loop.index}}">
+                <div class="col-sm-2">{{ story.title }}</div>
+                <div class="col-sm-8">{{ story.description }}</div>
+                <div class="col-sm-2">{{ story.likes }}</div>
+              </div>
+
+              <!-- The Modal -->
+              <div class="modal fade" id="myModal{{loop.index}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">{{story.title}}</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      {{story.description}}
+                      {{story.likes}}
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             {% endfor %}
           {% endblock %}
+          </div>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="col-sm-3">&nbsp;</div>
       </div>
     </div>
   </body>
