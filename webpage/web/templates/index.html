@@ -8,6 +8,7 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Самые популярные идеи</title>
+    <script src="/static/js/script.js"></script>
   </head>
   <body>
     <div class="jumbotron text-center">
@@ -35,10 +36,7 @@
                 <td>{{story.description}}</td>
                 <td>{{story.likes}}</td>
                 <td>{{story.dislikes}}</td>
-              </tr>
-
-
-              
+              </tr>              
             {% endfor %}
           </table>
           </div>
@@ -82,12 +80,10 @@
                           <div class="card-body">
 
                             {%for comment in comments%}
-                            <!-- <div class="row"> -->
-                              <blockquote class="blockquote">
+                            <blockquote class="blockquote">
                               <p class="mb-0">{{comment.content}}</p>
                               <footer class="blockquote-footer">{{comment.author}}</footer>
                             </blockquote>
-                            <!-- </div> -->
                             {%endfor%}
 
                           </div>
@@ -99,7 +95,14 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <div class="row">
+                    <div class="form-group col-sm-12">
+                      <label for="comment">Отчет:</label>
+                      <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+                    <button id="submit" type="button" class="btn btn-success offset-sm-2" data-dismiss="modal">Подтвердить</button>
+                    <button id="decline" type="button" class="btn btn-danger offset-sm-1" data-dismiss="modal">Отклонить</button>
+                  </div>
                 </div>
 
               </div>
