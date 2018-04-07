@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+webpage/__pycache__
+webpage/web/__pycache__
+web/*.egg-info
