@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nekono.inno.hotelki">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +26,31 @@
         <activity android:name=".PopItemsActivity">
 
         </activity>
+        <activity android:name=".EditMarkerActivity"/>
+        <!--Developers should put application credentials here.To obtain them, please register the application
+         at https://developer.here.com/develop/mobile-sdks-->
+        <meta-data
+            android:name="com.here.android.maps.appid"
+            android:value="F326AQuwkKATeuJOrBTp" />
+        <meta-data
+            android:name="com.here.android.maps.apptoken"
+            android:value="uO46HkTia2IFvJ6_1cFuYg" />
+        <meta-data
+            android:name="com.here.android.maps.license.key"
+            android:value="V/R6N44gT0ZaL0nvRY2qeFdC9DtyFXUc+dJmiCvQhM+H0wwyAKJK8+xbGpsdB7tEL4SgGXijQHOvKx9vUxZ1I6L21LBGOkktcc/a2ZqdX5W/EulIjkVC+xKhW37bVPg/BDFBLutHDoOaaxMrLc3JE/nnOrrLRBitBxm4LkL9ez9m8FN4NbidnSz+LUor/4VHsLyAmcHwizmPdETWvYOYAq+8XDjmyZ+rrxDmlZ4mIXVbYcZRkxFWdEUpBmai2elb6R9M2PeNlfNWTbzxaGLT2vIqcy9ByadPGY667Z+Ilc6bdZ5d3jBNM91eJfAA2Q2oY5TfUhDkv6pxmj4aNiUbkx0PpruuaobavAes5kjvz3fyRjwzQKcQV68T6Hx50+Pg3pVJuKzM9bMSYfUnGBuA3A/qrybfNaleXPi8nan05a5CfSR41jAWKBurbmfKn2XxfwJ61IS5Njkrgju1FhE6c3/87nqpTipRY/hjcBCba105c+Drjpv63qizghtSHTVfyR5oGjizj3yqhus9JJ8EIXaM0oB4d7/SLuwztfzD7FP2xAh35MP8lIAxbEuC5nqmqTdnAiU6EUdQA+cOZWismQGND0MZ8I2OceDf9ZvWL8tWpGMH6y1cbxLCl1PIz6bvPEMw60W4uHX0n7W1FFeSGwKw3Ix1THVjg/81WKrhlQM=" />
+
+        <!--Developers should always provide custom values for each of {YOUR_LABEL_NAME} and {YOUR_INTENT_NAME}.
+        Do not reuse HERE SDK defaults.-->
+        <meta-data
+            android:name="INTENT_NAME"
+            android:value=".MainActivity" />
+        <service
+            android:name="com.here.android.mpa.service.MapService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name=".MainActivity"></action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
