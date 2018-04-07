@@ -182,7 +182,8 @@ public class MapFragmentView {
 
                                         @Override
                                         public boolean onLongPressEvent(PointF pointF) {
-                                            showMsg("Long Press");
+                                            showMsg("x: " + pointF.x);
+                                            showMsg("y: " + pointF.y);
 
                                             MapScreenMarker m_tap_marker = new MapScreenMarker(pointF,
                                                     m_marker_image);
