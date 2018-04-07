@@ -41,11 +41,12 @@ def dropdb_cmd():
 	drop_db()
 	print("Dropped db")
 
-@app.teardown_appcontext
-def close_db(error):
-	if hasattr(g, 'postgre_db'):
-		g.postgre_db.close()
+# @app.teardown_appcontext
+# def close_db(error):
+# 	if hasattr(g, 'postgre_db'):
+# 		g.postgre_db.close()
 
 @app.route('/')
 def show():
-	return "hello world"
+	stories = [{'title': 'a', 'likes': 15, 'description': 'lorem ipsum ist dalor'}, {'title': 'b', 'likes': 3, 'description': 'Дорогие друзья'}]
+	return flask.render_template('index.html', stories=stories)
