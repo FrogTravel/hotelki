@@ -7,21 +7,41 @@ import java.util.List;
  */
 
 public class Idea {
-    private String name, description;
-    private int likes, dislikes;
-    private double lat;
-    private double lng;
-    private List<String> tags;
+    private String name;
+    private String description;
+    private int likes;
+    private int dislikes;
+    private int id;
+    private double lan;
+    private double lon;
+    private int approved;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
-    public Idea(String name, String description, List<String> tags, int likes, int dislikes, double lat, double lng) {
+    public int getApproved() {
+        return approved;
+    }
+
+    public void setApproved(int approved) {
+        this.approved = approved;
+    }
+
+    public Idea(int id, String name, String description, int likes, int dislikes, double lat, double lng, int approved) {
         this.name = name;
         this.description = description;
         this.likes = likes;
         this.dislikes = dislikes;
-        this.lat = lat;
-        this.lng = lng;
-        this.tags = tags;
+        this.id = id;
+        this.lan = lat;
+        this.lon = lng;
+        this.approved = approved;
     }
 
     public String getName() {
@@ -57,26 +77,19 @@ public class Idea {
     }
 
     public double getLat() {
-        return lat;
+        return lan;
     }
 
     public void setLat(double lat) {
-        this.lat = lat;
+        this.lan = lat;
     }
 
     public double getLng() {
-        return lng;
+        return lon;
     }
 
     public void setLng(double lng) {
-        this.lng = lng;
+        this.lon = lng;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
 }

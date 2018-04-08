@@ -29,27 +29,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Api api = Api.retrofit.create(Api.class);
-        Call<List<Idea>> call = api.getIdeas();
-
-
-        call.enqueue(new Callback<List<Idea>>() {
-            @Override
-            public void onResponse(Call<List<Idea>> call, Response<List<Idea>> response) {
-                Log.d("CLIENTSERVER", response.body().toString());
-
-                List<Idea> idea = response.body();
-                for(Idea id : idea){
-                    Log.d("CLIENTSERVER", id.getName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Idea>> call, Throwable t) {
-
-            }
-        });
-
 
         requestPermissions();
     }

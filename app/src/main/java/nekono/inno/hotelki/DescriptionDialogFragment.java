@@ -40,7 +40,8 @@ public class DescriptionDialogFragment extends DialogFragment {
         this.lat = getArguments().getDouble("lat");
         this.lng = getArguments().getDouble("lng");
 
-        descriptionTextView.setText(lat + " " + lng);
+        nameTextView.setText("Фитнес-центр");
+        descriptionTextView.setText("Очень хотим здесь фитнес центр!!!");
 
 
         final AlertDialog dialog = new AlertDialog.Builder(getActivity())

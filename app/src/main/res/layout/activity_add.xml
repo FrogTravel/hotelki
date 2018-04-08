@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,34 +7,44 @@
     android:orientation="vertical"
     tools:context="nekono.inno.hotelki.MainActivity">
 
-    <EditText
-        android:id="@+id/nameEditText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/name_field"
-        android:inputType="textPersonName"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/name_field"
+            android:inputType="textPersonName"
+            android:layout_marginTop="5dp"/>
+        <EditText
+            android:id="@+id/descriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:ems="10"
+            android:hint="@string/desc_field"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="20dp"/>
 
-    <EditText
-        android:id="@+id/descriptionEditText"
-        android:layout_width="match_parent"
-        android:layout_height="143dp"
-        android:ems="10"
-        android:hint="@string/desc_field"
-        android:inputType="textMultiLine" />
+        <EditText
+            android:id="@+id/tagsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/tags_field"
+            android:inputType="textPersonName"
+            android:layout_marginTop="20dp"/>
 
-    <EditText
-        android:id="@+id/tagsEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/tags_field"
-        android:inputType="textPersonName" />
 
+    </LinearLayout>
     <Button
         android:id="@+id/add_button"
-        android:layout_width="175dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/buttonBackground"
+        android:onClick="onAdd"
         android:text="@string/add"
-        android:onClick="onAdd" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

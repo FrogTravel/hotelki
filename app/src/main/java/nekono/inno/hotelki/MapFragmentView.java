@@ -30,6 +30,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /*
  * Copyright (c) 2011-2017 HERE Europe B.V.
  *
@@ -119,7 +123,7 @@ public class MapFragmentView {
                                 e.printStackTrace();
                             }
 
-
+                            showOldMarkers();
                             m_mapFragment.getMapGesture()
                                     .addOnGestureListener(new MapGesture.OnGestureListener() {
                                         @Override
@@ -262,6 +266,37 @@ public class MapFragmentView {
             }
         }
 
+    }
+
+    private void showOldMarkers() {
+
+        Api api = Api.retrofit.create(Api.class);
+        Call<List<Idea>> call = api.getIdeas();
+
+
+        call.enqueue(new Callback<List<Idea>>() {
+            @Override
+            public void onResponse(Call<List<Idea>> call, Response<List<Idea>> response) {
+                Log.d("CLIENTSERVER", response.body().toString());
+
+                List<Idea> idea = response.body();
+                for(Idea id : idea){
+                    Log.d("CLIENTSERVER", id.getName());
+                    MapMarker m_tap_marker = new MapMarker(new GeoCoordinate(id.getLat(), id.getLng()),
+                            m_marker_image);
+
+                    m_map.addMapObject(m_tap_marker);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Idea>> call, Throwable t) {
+                Log.d("CLIENTSERVER", t.toString());
+
+            }
+        });
     }
 
     private void showMsg(String msg) {

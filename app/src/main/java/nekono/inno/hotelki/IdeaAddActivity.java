@@ -37,10 +37,13 @@ public class IdeaAddActivity extends Activity {
 
     //TODO Pass lat lng
     public void onAdd(View view){
-        Idea idea = new Idea(nameEditText.getText().toString(), descriptionEditText.getText().toString(), Arrays.asList(tagsEditText.getText().toString().split(",")), 0,0, lat, lng);
+        Idea idea = new Idea(0, nameEditText.getText().toString(), descriptionEditText.getText().toString(), 0,0,  lat, lng, 0);
 
         Log.d("IDEA",idea.getName() + idea.getLat() + idea.getLng());
-        //TODO Send POST here
+        Api api = Api.retrofit.create(Api.class);
+
+//        api.addMarker(idea);
+
         this.finish();
     }
 

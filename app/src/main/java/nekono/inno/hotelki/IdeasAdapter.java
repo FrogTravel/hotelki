@@ -35,7 +35,8 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.IdeasViewHol
         Idea idea = ideasList.get(position);
 
         holder.nameTextView.setText(idea.getName().toString());
-        holder.statusTextView.setText(String.valueOf(idea.getLikes()));//TODO change when modul will change
+        holder.statusTextView.setText(String.valueOf(idea.getApproved()));
+        holder.descriptionTextView.setText(String.valueOf(idea.getDescription()));
     }
 
     @Override
@@ -47,12 +48,14 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.IdeasViewHol
     public static class IdeasViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView statusTextView;
+        TextView descriptionTextView;
 
 
         public IdeasViewHolder(View itemView) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.ideaNameTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             statusTextView = itemView.findViewById(R.id.statusTextView);
         }
     }
