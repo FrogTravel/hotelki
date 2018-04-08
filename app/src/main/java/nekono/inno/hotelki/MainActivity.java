@@ -1,6 +1,7 @@
 package nekono.inno.hotelki;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -8,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,24 +48,55 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // return if all permissions already granted
+//         return if all permissions already granted
         if (isPermissionsGranted) {
             Log.d("Test", "Permission Granted");
             createMapFragmentView();
             return;
         }
+    }
 
-        // request permissions
-        if (android.os.Build.VERSION.SDK_INT >= 23){
-            ActivityCompat.requestPermissions(this,
-                    RUNTIME_PERMISSIONS,
-                    REQUEST_CODE_ASK_PERMISSIONS);
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_settings:
+                    // User chose the "Settings" item, show the app settings UI...
+                    return true;
 
-        }else{
-            Log.d("Test", "SDK FAIL");
+                case R.id.action_favorite:
+                    // User chose the "Favorite" action, mark the current item
+                    // as a favorite...
+                    return true;
 
+                default:
+                    // If we got here, the user's action was not recognized.
+                    // Invoke the superclass to handle it.
+                    return super.onOptionsItemSelected(item);
+
+                // request permissions
+                if (android.os.Build.VERSION.SDK_INT >= 23) {
+                    ActivityCompat.requestPermissions(this,
+                            RUNTIME_PERMISSIONS,
+                            REQUEST_CODE_ASK_PERMISSIONS);
+
+                } else {
+                    Log.d("Test", "SDK FAIL");
+
+                }
+
+            }
         }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_business_item, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        startActivity(new Intent(this, PopItemsActivity.class));
+        return true;
     }
 
 
