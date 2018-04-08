@@ -7,12 +7,16 @@ package nekono.inno.hotelki;
 public class Idea {
     private String name, description;
     private int likes, dislikes;
+    private double lat;
+    private double lng;
 
-    public Idea(String name, String description, int likes, int dizlikes) {
+    public Idea(String name, String description, int likes, int dizlikes, double lat, double lng) {
         this.name = name;
         this.description = description;
         this.likes = likes;
         this.dislikes = dizlikes;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getName() {

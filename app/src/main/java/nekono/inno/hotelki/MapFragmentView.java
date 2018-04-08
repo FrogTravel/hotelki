@@ -7,7 +7,9 @@ import com.here.android.mpa.common.ViewObject;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
 import com.here.android.mpa.mapping.MapGesture;
+import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapObject;
+import com.here.android.mpa.mapping.MapOverlayType;
 import com.here.android.mpa.mapping.MapScreenMarker;
 
 import android.app.Activity;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -50,7 +53,8 @@ public class MapFragmentView {
     private Activity m_activity;
     private Map m_map;
     private Image m_marker_image;
-    private List<MapScreenMarker> mapScreenMarkers;
+    private List<MapMarker> mapScreenMarkers;
+    private boolean isMarker = false;
 
 
     public MapFragmentView(Activity activity) {
@@ -139,6 +143,19 @@ public class MapFragmentView {
 
                                         @Override
                                         public boolean onMapObjectsSelected(List<ViewObject> list) {
+                                            for (ViewObject viewObj : list) {
+                                                if (viewObj.getBaseType() == ViewObject.Type.USER_OBJECT) {
+                                                    if (((MapObject) viewObj).getType() == MapObject.Type.MARKER) {
+                                                        // At this point we have the originally added
+                                                        // map marker, so we can do something with it
+                                                        // (like change the visibility, or more
+                                                        // marker-specific actions)
+                                                    }
+
+                                                    isMarker = true;
+                                                }
+                                            }
+
                                             return false;
                                         }
 
@@ -146,7 +163,10 @@ public class MapFragmentView {
                                         public boolean onTapEvent(PointF pointF) {
                                         /* show toast message for onPanEnd gesture callback */
                                             // showMsg("onTapEvent");
-
+                                            if(isMarker){
+                                                showMsg("MARKER TAPPED!!!!");
+                                                isMarker = false;
+                                            }
 
                                             return false;
                                         }
@@ -184,14 +204,13 @@ public class MapFragmentView {
 
                                         @Override
                                         public boolean onLongPressEvent(PointF pointF) {
-                                            showMsg("x: " + pointF.x);
-                                            showMsg("y: " + pointF.y);
+                                            showMsg(pointF.toString());
 
-                                            MapScreenMarker m_tap_marker = new MapScreenMarker(pointF,
+                                            MapMarker m_tap_marker = new MapMarker(m_map.pixelToGeo(pointF),
                                                     m_marker_image);
 
-
                                             m_map.addMapObject(m_tap_marker);
+
 
                                             Intent intent = new Intent(m_mapFragment.getActivity(), IdeaAddActivity.class);
                                             m_mapFragment.startActivity(intent);
@@ -216,9 +235,6 @@ public class MapFragmentView {
                              */
 
                             m_map.setCenter(new GeoCoordinate(49.258576, -123.008268), Map.Animation.NONE);
-
-
-
 
                         } else {
                             Toast.makeText(m_activity,

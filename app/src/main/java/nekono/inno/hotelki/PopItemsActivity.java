@@ -19,10 +19,10 @@ public class PopItemsActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Idea> ideaList = new ArrayList<>();
-        ideaList.add(new Idea("some name 1", "some description", 12, 231));
-        ideaList.add(new Idea("some name 2", "some description", 12, 231));
-        ideaList.add(new Idea("some name 3", "some description", 12, 231));
-        ideaList.add(new Idea("some name 4", "some description", 12, 231));
+        ideaList.add(new Idea("some name 1", "some description", 12, 231, 0, 0));
+        ideaList.add(new Idea("some name 2", "some description", 12, 231, 0, 0));
+        ideaList.add(new Idea("some name 3", "some description", 12, 231, 0, 0));
+        ideaList.add(new Idea("some name 4", "some description", 12, 231, 0, 0));
 
         recyclerView.setAdapter(new IdeasAdapter(ideaList));
 
