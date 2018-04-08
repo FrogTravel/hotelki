@@ -153,6 +153,14 @@ public class MapFragmentView {
                                                         // marker-specific actions)
                                                         MapMarker marker = (MapMarker) viewObj;
 
+                                                        DialogFragment dialogFragment = new DescriptionDialogFragment();
+
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putDouble("lat", marker.getCoordinate().getLatitude());
+                                                        bundle.putDouble("lng", marker.getCoordinate().getLongitude());
+
+                                                        dialogFragment.setArguments(bundle);
+                                                        dialogFragment.show(m_mapFragment.getActivity().getFragmentManager(), "mysupertag");
                                                     }
 
                                                     isMarker = true;
@@ -270,4 +278,6 @@ public class MapFragmentView {
         }, 1000);
 
     }
+
+
 }

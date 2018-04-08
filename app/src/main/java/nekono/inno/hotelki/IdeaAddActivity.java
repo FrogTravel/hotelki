@@ -44,4 +44,5 @@ public class IdeaAddActivity extends Activity {
         this.finish();
     }
 
+
 }
