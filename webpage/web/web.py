@@ -49,5 +49,11 @@ def dropdb_cmd():
 @app.route('/')
 def show():
 	comments = [{'author': 'John Doe', 'content': 'Lorem ipsum'}, {'author': 'Mark', 'content': 'Я люблю кофер'}]
-	stories = [{'title': 'a', 'likes': 15, 'dislikes': 11, 'description': 'lorem ipsum ist dalor'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, {'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}]
+	stories = [{'id': 1, 'title': 'a', 'likes': 15, 'dislikes': 11, 'description': 'lorem ipsum ist dalor'}, 
+						{'id': 2, 'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, 
+						{'id': 3, 'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогой друщь'}, 
+						{'id': 4, 'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Друсь'}, 
+						{'id': 5, 'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}, 
+						{'id': 6, 'title': 'b', 'likes': 3, 'dislikes': 4, 'description': 'Дорогие друзья'}
+						]
 	return flask.render_template('index.html', stories=stories, comments=comments)

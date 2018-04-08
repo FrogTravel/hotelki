@@ -25,6 +25,7 @@
           {% block body %}
             <table class="table table-striped table-sm">
               <tr>
+                <td>Номер</td>
                 <td>Название</td>
                 <td>Описание</td>
                 <td>Количество лайков</td>
@@ -32,6 +33,7 @@
               </tr>
             {% for story in stories %}
               <tr data-toggle="modal" data-target="#myModal{{loop.index}}">
+                <td>{{story.id}}</td>
                 <td>{{story.title}}</td>
                 <td>{{story.description}}</td>
                 <td>{{story.likes}}</td>
@@ -50,13 +52,19 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                  <h4 class="modal-title">{{story.title}}</h4>
+                  <h4 class="modal-title">
+                    <div class="row">
+                      <div class="col-sm-2 text-center id">{{story.id}}</div>
+                      <div class="col-sm-10 text-center">{{story.title}}</div>
+                    </div>
+                  </h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
                   <div class="row">
+                   <div class="col-sm-2 text-center"></div>
                    <div class="col-sm-12 text-center">{{story.description}}</div>
                    <div class="w-100"></div>
                    <div class="col-sm-6 text-center">Лайки</div>
@@ -100,7 +108,7 @@
                       <label for="comment">Отчет:</label>
                       <textarea class="form-control" rows="5" id="comment"></textarea>
                     </div>
-                    <button id="submit" type="button" class="btn btn-success offset-sm-2" data-dismiss="modal">Подтвердить</button>
+                    <button id="submit" param= type="button" class="btn btn-success offset-sm-2" data-dismiss="modal">Подтвердить</button>
                     <button id="decline" type="button" class="btn btn-danger offset-sm-1" data-dismiss="modal">Отклонить</button>
                   </div>
                 </div>
