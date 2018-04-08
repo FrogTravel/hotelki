@@ -70,7 +70,7 @@ def show():
 
 
 @app.route('/api/get/markers', methods=['GET'])
-def get_task1():
+def get_request_all_markers():
     rows = get_all_markers()
     markers = markers_rows_to_dicts(rows)
     json_str = json.dumps(markers)
@@ -78,7 +78,7 @@ def get_task1():
 
 
 @app.route('/api/get/markers/<id>', methods=['GET'])
-def get_task2(id):
+def get_request_marker_by_id(id):
     rows = get_marker_by_id(id)
     markers = markers_rows_to_dicts(rows)
     json_str = json.dumps(markers)
@@ -86,7 +86,7 @@ def get_task2(id):
 
 
 @app.route('/api/get/comments/<marker_id>', methods=['GET'])
-def get_task3(marker_id):
+def get_request_comments_by_id(marker_id):
     rows = get_all_comments(marker_id)
     comments = comments_rows_to_dicts(rows)
     json_str = json.dumps(comments)
@@ -94,22 +94,14 @@ def get_task3(marker_id):
 
 
 @app.route('/api/get/marker/non_approve', methods=['GET'])
-def get_task4():
+def get_request_nonapproveed_markers():
     rows = get_nonapproved_markers()
     comments = comments_rows_to_dicts(rows)
     json_str = json.dumps(comments)
     return flask.jsonify(json_str)
 
 
-@app.route('/api/get/marker/non_approve', methods=['GET'])
-def get_task5():
-    rows = get_nonapproved_markers()
-    comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return flask.jsonify(json_str)
-
-
-@app.route('/api/get/marker/create', methods=['POST'])
+@app.route('/api/post/marker/create', methods=['POST'])
 def create_marker():
     data = request.json2
     if not data:
@@ -119,7 +111,7 @@ def create_marker():
     return 201
 
 
-@app.route('/api/get/comments/create', methods=['POST'])
+@app.route('/api/post/comments/create', methods=['POST'])
 def create_comment():
     data = request.json
     if not data:
@@ -129,19 +121,19 @@ def create_comment():
     return 201
 
 
-@app.route('/api/get/markers/like/<id>', methods=['POST'])
+@app.route('/api/post/markers/like/<id>', methods=['POST'])
 def marker_like(id):
     make_like(id)
     return 201
 
 
-@app.route('/api/get/markers/dislike/<id>', methods=['POST'])
+@app.route('/api/post/markers/dislike/<id>', methods=['POST'])
 def marker_dislike(id):
     make_dislike(id)
     return 201
 
 
-@app.route('/api/get/markers/gov_feedback/<id>&<approved_level>&<message>', methods=['POST'])
+@app.route('/api/post/markers/gov_feedback/<id>&<approved_level>&<message>', methods=['POST'])
 def update_marker(id, approved_level, message):
     update_approvement(id, message, approved_level)
     return 201
@@ -201,7 +193,7 @@ def create_marker(marker):
     values = str()
     for i in str_marker_list:
         values = values+i
-    cursor.execute('INSERT INTO markers (id,name,lan,lon,description,likes'
+    cursor.execute('INSERT INTO markers (name,lan,lon,description,likes'
                    ',dislikes,tags,approved,author,comments_from_government) VALUES ('
                    + values + ' );')
 
@@ -216,7 +208,7 @@ def create_comments(comment):
     values = str()
     for i in str_comment_list:
         values = values+i
-    cursor.execute('INSERT INTO comments (Id,author,message,marker) VALUES ('
+    cursor.execute('INSERT INTO comments (author,message,marker) VALUES ('
                    + values + ' );')
 
 
