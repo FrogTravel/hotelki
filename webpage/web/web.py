@@ -73,9 +73,10 @@ def show():
 def get_request_all_markers():
     rows = get_all_markers()
     markers = markers_rows_to_dicts(rows)
-    json_str = json.dumps(markers)
-    print(json_str)
-    return json_str
+    return json.jsonify(markers)
+    # json_str = json.dumps(markers)
+    # print(json_str)
+    # return json_str
 
 
 # WOrks
@@ -89,8 +90,9 @@ def get_request_marker_by_id():
     print(item_id)
     rows = get_marker_by_id(item_id)
     markers = markers_rows_to_dicts(rows)
-    json_str = json.dumps(markers)
-    return json_str
+    return json.jsonify(markers)
+    # json_str = json.dumps(markers)
+    # return json_str
 
 
 @app.route('/api/get/comments/', methods=['GET'])
@@ -99,8 +101,9 @@ def get_request_comments_by_id():
     marker_id = request.args['id']
     rows = get_all_comments(marker_id)
     comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return json_str
+    return json.jsonify(comments)
+    # json_str = json.dumps(comments)
+    # return json_str
 
 
 @app.route('/api/get/markers_by_points/', methods=['GET'])
@@ -110,16 +113,18 @@ def get_request_markers_by_points():
     lon = request.args['lon']
     rows = get_markers_by_points(float(lan), float(lon))
     comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return json_str
+    return json.jsonify(comments)
+    # json_str = json.dumps(comments)
+    # return json_str
 
 
 @app.route('/api/get/markers/non_approve', methods=['GET'])
 def get_request_nonapproveed_markers():
     rows = get_nonapproved_markers()
     comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return json_str
+    return json.jsonify(comments)
+    # json_str = json.dumps(comments)
+    # return json_str
 
 
 @app.route('/api/post/marker/create', methods=['POST'])
