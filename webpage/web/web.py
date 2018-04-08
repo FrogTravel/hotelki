@@ -77,43 +77,47 @@ def get_request_all_markers():
     return flask.jsonify(json_str)
 
 
-@app.route('/api/get/markers/<id>', methods=['GET'])
-def get_request_marker_by_id(id):
-    rows = get_marker_by_id(id)
-    markers = markers_rows_to_dicts(rows)
-    json_str = json.dumps(markers)
-    return flask.jsonify(json_str)
+@app.route('/api/get/markers/', methods=['GET'])
+def get_request_marker_by_id():
+	data = request.get_json(force=True)
+	item_id = data.get('id')
+	rows = get_marker_by_id(item_id)
+	markers = markers_rows_to_dicts(rows)
+	json_str = json.dumps(markers)
+	return flask.jsonify(json_str)
 
 
-@app.route('/api/get/comments/<marker_id>', methods=['GET'])
-def get_request_comments_by_id(marker_id):
-    rows = get_all_comments(marker_id)
-    comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return flask.jsonify(json_str)
+@app.route('/api/get/comments', methods=['GET'])
+def get_request_comments_by_id():
+	data = request.get_json(force=True)
+	marker_id = data.get('id')
+	rows = get_all_comments(marker_id)
+	comments = comments_rows_to_dicts(rows)
+	json_str = json.dumps(comments)
+	return flask.jsonify(json_str)
 
 
 @app.route('/api/get/marker/non_approve', methods=['GET'])
 def get_request_nonapproveed_markers():
-    rows = get_nonapproved_markers()
-    comments = comments_rows_to_dicts(rows)
-    json_str = json.dumps(comments)
-    return flask.jsonify(json_str)
+	rows = get_nonapproved_markers()
+	comments = comments_rows_to_dicts(rows)
+	json_str = json.dumps(comments)
+	return flask.jsonify(json_str)
 
 
 @app.route('/api/post/marker/create', methods=['POST'])
 def create_marker():
-    data = request.json2
-    if not data:
-        abort(400)
-    marker_dict = json.load(data)
-    create_marker(marker_dict)
-    return 201
+	data = request.get_json(force=True)
+	if not data:
+	    abort(400)
+	marker_dict = json.load(data)
+	create_marker(marker_dict)
+	return 201
 
 
 @app.route('/api/post/comments/create', methods=['POST'])
 def create_comment():
-    data = request.json
+    data = request.get_json(force=True)
     if not data:
         abort(400)
     comments_dict = json.load(data)
@@ -121,23 +125,32 @@ def create_comment():
     return 201
 
 
-@app.route('/api/post/markers/like/<id>', methods=['POST'])
-def marker_like(id):
-    make_like(id)
-    return 201
+@app.route('/api/post/markers/like', methods=['POST'])
+def marker_like():
+	data = request.get_json(force=True)
+	item_id = data.get('id')
+	make_like(item_id)
+	return 201
 
 
-@app.route('/api/post/markers/dislike/<id>', methods=['POST'])
-def marker_dislike(id):
-    make_dislike(id)
-    return 201
+@app.route('/api/post/markers/dislike', methods=['POST'])
+def marker_dislike():
+	data = request.get_json(force=True)
+	item_id = data.get('id')
+	make_dislike(item_id)
+	return 201
 
 
-@app.route('/api/post/markers/gov_feedback/<id>&<approved_level>&<message>', methods=['POST'])
-def update_marker(id, approved_level, message):
-    update_approvement(id, message, approved_level)
-    return 201
-
+@app.route('/api/post/markers/gov_feedback', methods=['POST'])
+def update_marker():
+	print("Accessed")
+	data = request.get_json(force=True)
+	item_id=data.get('id')
+	approved_level=data.get('approved_level')
+	message=data.get('message')
+	print("{} & {} & {}".format(item_id, approved_level, message))
+	update_approvement(item_id, message, approved_level)
+	return 201	
 
 def comments_rows_to_dicts(rows):
     markers = list()
@@ -212,19 +225,19 @@ def create_comments(comment):
                    + values + ' );')
 
 
-def make_like(id):
+def make_like(item_id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE markers SET likes = (SELECT likes FROM markers WHERE id =\'"+str(id)+'\')+1'
+    cursor.execute("UPDATE markers SET likes = (SELECT likes FROM markers WHERE id =\'"+str(item_id)+'\')+1'
                    + 'WHERE id =\''+str(id)+'\';')
 
 
-def make_dislike(id):
+def make_dislike(item_id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE markers SET dislikes = (SELECT dislikes FROM markers WHERE id =\'"+str(id)+'\')+1'
+    cursor.execute("UPDATE markers SET dislikes = (SELECT dislikes FROM markers WHERE id =\'"+str(item_id)+'\')+1'
                    + 'WHERE id =\''+str(id)+'\';')
 
 
-def update_approvement(id, message, approvement_level):
+def update_approvement(item_id, message, approvement_level):
     cursor = get_db().cursor()
     cursor.execute('UPDATE markers SET approved = '+str(approvement_level) + ', comment_from_governments = ' +
-                   str(message) + 'WHERE id =\''+str(id)+'\';')
+                   str(message) + 'WHERE id =\''+str(item_id)+'\';')
