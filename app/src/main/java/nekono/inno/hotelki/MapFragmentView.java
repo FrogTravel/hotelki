@@ -13,6 +13,7 @@ import com.here.android.mpa.mapping.MapOverlayType;
 import com.here.android.mpa.mapping.MapScreenMarker;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -150,9 +151,12 @@ public class MapFragmentView {
                                                         // map marker, so we can do something with it
                                                         // (like change the visibility, or more
                                                         // marker-specific actions)
+                                                        MapMarker marker = (MapMarker) viewObj;
+
                                                     }
 
                                                     isMarker = true;
+
                                                 }
                                             }
 
@@ -163,10 +167,10 @@ public class MapFragmentView {
                                         public boolean onTapEvent(PointF pointF) {
                                         /* show toast message for onPanEnd gesture callback */
                                             // showMsg("onTapEvent");
-                                            if(isMarker){
-                                                showMsg("MARKER TAPPED!!!!");
-                                                isMarker = false;
-                                            }
+//                                            if(isMarker){
+//                                                showMsg("MARKER TAPPED!!!!");
+//                                                isMarker = false;
+//                                            }
 
                                             return false;
                                         }
@@ -204,7 +208,6 @@ public class MapFragmentView {
 
                                         @Override
                                         public boolean onLongPressEvent(PointF pointF) {
-                                            showMsg(pointF.toString());
 
                                             MapMarker m_tap_marker = new MapMarker(m_map.pixelToGeo(pointF),
                                                     m_marker_image);
@@ -213,6 +216,9 @@ public class MapFragmentView {
 
 
                                             Intent intent = new Intent(m_mapFragment.getActivity(), IdeaAddActivity.class);
+                                            intent.putExtra("lat", m_map.pixelToGeo(pointF).getLatitude());
+                                            intent.putExtra("lng", m_map.pixelToGeo(pointF).getLongitude());
+
                                             m_mapFragment.startActivity(intent);
                                             return false;
                                         }
