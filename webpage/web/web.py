@@ -1,5 +1,4 @@
 # /usr/bin/python2.7
-from os import abort
 
 import flask
 import psycopg2
@@ -68,74 +67,72 @@ def show():
                ]
     return flask.render_template('index.html', stories=stories, comments=comments)
 
+
 # Works
 @app.route('/api/get/markers', methods=['GET'])
 def get_request_all_markers():
     rows = get_all_markers()
     markers = markers_rows_to_dicts(rows)
     json_str = json.dumps(markers)
-    return flask.jsonify(json_str)
+    print(json_str)
+    return json_str
 
-# Does not work bcs empty db
+
+# WOrks
 @app.route('/api/get/markers/', methods=['GET'])
 def get_request_marker_by_id():
-	print("i am alive")
-	data = request.get_json()
-	print("i am alive2")
-	print(json)
-	item_id = json.get('id')
-	print(item_id)
-	rows = get_marker_by_id(item_id)
-	markers = markers_rows_to_dicts(rows)
-	json_str = json.dumps(markers)
-	return flask.jsonify(json_str)
+    print("i am alive")
+    data = request.get_json()
+    print("i am alive2")
+    print(json)
+    item_id = request.args['id']
+    print(item_id)
+    rows = get_marker_by_id(item_id)
+    markers = markers_rows_to_dicts(rows)
+    json_str = json.dumps(markers)
+    return json_str
 
 
-@app.route('/api/get/comments', methods=['GET'])
+@app.route('/api/get/comments/', methods=['GET'])
 def get_request_comments_by_id():
-	data = request.get_json()
-	marker_id = data.get('id')
-	rows = get_all_comments(marker_id)
-	comments = comments_rows_to_dicts(rows)
-	json_str = json.dumps(comments)
-	return flask.jsonify(json_str)
+    # data = request.get_json()
+    marker_id = request.args['id']
+    rows = get_all_comments(marker_id)
+    comments = comments_rows_to_dicts(rows)
+    json_str = json.dumps(comments)
+    return json_str
+
 
 @app.route('/api/get/markers_by_points/', methods=['GET'])
 def get_request_markers_by_points():
     data = request.get_json()
-    if not data:
-        abort(400)
-    lan = data.get('lan')
-    lon = data.get('lon')
+    lan = request.args['lan']
+    lon = request.args['lon']
     rows = get_markers_by_points(float(lan), float(lon))
     comments = comments_rows_to_dicts(rows)
     json_str = json.dumps(comments)
-    return flask.jsonify(json_str)
+    return json_str
 
 
 @app.route('/api/get/markers/non_approve', methods=['GET'])
 def get_request_nonapproveed_markers():
-	rows = get_nonapproved_markers()
-	comments = comments_rows_to_dicts(rows)
-	json_str = json.dumps(comments)
-	return flask.jsonify(json_str)
+    rows = get_nonapproved_markers()
+    comments = comments_rows_to_dicts(rows)
+    json_str = json.dumps(comments)
+    return json_str
 
 
 @app.route('/api/post/marker/create', methods=['POST'])
 def create_marker():
-	data = request.get_json()
-	if not data:
-	    abort(400)
-	marker_dict = json.load(data)
-	create_marker(marker_dict)
-	return 201
+    data = request.get_json()
+    marker_dict = json.load(data)
+    create_marker(marker_dict)
+    return 201
 
 
 @app.route('/api/post/comments/create', methods=['POST'])
 def create_comment():
     data = request.get_json()
-    if not data:
-        abort(400)
     comments_dict = json.load(data)
     create_comments(comments_dict)
     return 201
@@ -143,29 +140,31 @@ def create_comment():
 
 @app.route('/api/post/markers/like', methods=['POST'])
 def marker_like():
-	data = request.get_json()
-	item_id = data.get('id')
-	make_like(item_id)
-	return 201
+    data = request.get_json()
+    item_id = request.args['id']
+    make_like(item_id)
+    return 201
 
 
 @app.route('/api/post/markers/dislike', methods=['POST'])
 def marker_dislike():
-	data = request.get_json()
-	item_id = data.get('id')
-	make_dislike(item_id)
-	return 201
+    data = request.get_json()
+    item_id = request.args['id']
+    make_dislike(item_id)
+    return 201
+
 
 @app.route('/api/post/markers/gov_feedback', methods=['POST'])
 def update_marker():
-	print("Accessed")
-	data = request.get_json()
-	item_id=data.get('id')
-	approved_level=data.get('approved_level')
-	message=data.get('message')
-	print("{} & {} & {}".format(item_id, approved_level, message))
-	update_approvement(item_id, message, approved_level)
-	return 201	
+    print("Accessed")
+    data = request.get_json()
+    item_id = request.args['id']
+    approved_level = request.args['approved_level']
+    message = request.args['message']
+    print("{} & {} & {}".format(item_id, approved_level, message))
+    update_approvement(item_id, message, approved_level)
+    return 201
+
 
 def comments_rows_to_dicts(rows):
     markers = list()
@@ -244,27 +243,24 @@ def create_comments(comment):
 
 def make_like(item_id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE markers SET likes = (SELECT likes FROM markers WHERE id =\'"+str(item_id)+'\')+1'
-                   + 'WHERE id =\''+str(id)+'\';')
-
+    cursor.execute("UPDATE markers SET likes = (SELECT likes FROM markers WHERE id =\'" + str(item_id) + '\')+1'
+                   + 'WHERE id =\'' + str(id) + '\';')
 
 
 def make_dislike(item_id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE markers SET dislikes = (SELECT dislikes FROM markers WHERE id =\'"+str(item_id)+'\')+1'
-                   + 'WHERE id =\''+str(id)+'\';')
-
+    cursor.execute("UPDATE markers SET dislikes = (SELECT dislikes FROM markers WHERE id =\'" + str(item_id) + '\')+1'
+                   + 'WHERE id =\'' + str(id) + '\';')
 
 
 def update_approvement(item_id, message, approvement_level):
     cursor = get_db().cursor()
-    cursor.execute('UPDATE markers SET approved = '+str(approvement_level) + ', comment_from_governments = ' +
-                   str(message) + 'WHERE id =\''+str(item_id)+'\';')
-
+    cursor.execute('UPDATE markers SET approved = ' + str(approvement_level) + ', comment_from_governments = ' +
+                   str(message) + 'WHERE id =\'' + str(item_id) + '\';')
 
 
 def get_markers_by_points(lan, lon):
     cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM markers WHERE lan =' + str(lan) + ' lon = ' + str(lon) + ';')
+    cursor.execute('SELECT * FROM markers WHERE lan =' + str(lan) + ' AND lon = ' + str(lon) + ';')
     rows = cursor.fetchall()
     return rows
