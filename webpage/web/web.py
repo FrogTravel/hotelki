@@ -165,28 +165,28 @@ def markers_rows_to_dicts(rows):
 
 def get_all_markers():
     cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM hotelki.markers;")
+    cursor.execute("SELECT * FROM markers;")
     rows = cursor.fetchall()
     return rows
 
 
 def get_marker_by_id(ident):
     cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM hotelki.markers WHERE id='+str(ident)+';')
+    cursor.execute('SELECT * FROM markers WHERE id='+str(ident)+';')
     rows = cursor.fetchall()
     return rows
 
 
 def get_all_comments(marker_id):
     cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM hotelki.comments WHERE marker=\''+str(marker_id)+'\';')
+    cursor.execute('SELECT * FROM comments WHERE marker=\''+str(marker_id)+'\';')
     rows = cursor.fetchall()
     return rows
 
 
 def get_nonapproved_markers():
     cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM hotelki.markers WHERE approved=0;') #approved=0 means that it is not seen by governments
+    cursor.execute('SELECT * FROM markers WHERE approved=0;') #approved=0 means that it is not seen by governments
     rows = cursor.fetchall()
     return rows
 
@@ -201,7 +201,7 @@ def create_marker(marker):
     values = str()
     for i in str_marker_list:
         values = values+i
-    cursor.execute('INSERT INTO hotelki.markers (id,name,lan,lon,description,likes'
+    cursor.execute('INSERT INTO markers (id,name,lan,lon,description,likes'
                    ',dislikes,tags,approved,author,comments_from_government) VALUES ('
                    + values + ' );')
 
@@ -216,23 +216,23 @@ def create_comments(comment):
     values = str()
     for i in str_comment_list:
         values = values+i
-    cursor.execute('INSERT INTO hotelki.comments (Id,author,message,marker) VALUES ('
+    cursor.execute('INSERT INTO comments (Id,author,message,marker) VALUES ('
                    + values + ' );')
 
 
 def make_like(id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE hotelki.markers SET likes = (SELECT likes FROM hotelki.markers WHERE id =\'"+str(id)+'\')+1'
+    cursor.execute("UPDATE markers SET likes = (SELECT likes FROM markers WHERE id =\'"+str(id)+'\')+1'
                    + 'WHERE id =\''+str(id)+'\';')
 
 
 def make_dislike(id):
     cursor = get_db().cursor()
-    cursor.execute("UPDATE hotelki.markers SET dislikes = (SELECT dislikes FROM hotelki.markers WHERE id =\'"+str(id)+'\')+1'
+    cursor.execute("UPDATE markers SET dislikes = (SELECT dislikes FROM markers WHERE id =\'"+str(id)+'\')+1'
                    + 'WHERE id =\''+str(id)+'\';')
 
 
 def update_approvement(id, message, approvement_level):
     cursor = get_db().cursor()
-    cursor.execute('UPDATE hotelki.markers SET approved = '+str(approvement_level) + ', comment_from_governments = ' +
+    cursor.execute('UPDATE markers SET approved = '+str(approvement_level) + ', comment_from_governments = ' +
                    str(message) + 'WHERE id =\''+str(id)+'\';')
