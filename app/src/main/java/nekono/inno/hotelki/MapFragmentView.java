@@ -252,7 +252,7 @@ public class MapFragmentView {
                              * Please refer to the user guide for how to get the real-time location.
                              */
 
-                            m_map.setCenter(new GeoCoordinate(49.258576, -123.008268), Map.Animation.NONE);
+                            m_map.setCenter(new GeoCoordinate(55.799493, 49.105592), Map.Animation.NONE);
 
                         } else {
                             Toast.makeText(m_activity,

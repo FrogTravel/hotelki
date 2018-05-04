@@ -18,7 +18,7 @@ public interface Api {
     Call<List<Idea>> getIdeas();
 
     @POST("/api/post/marker/create")
-    void addMarker(@Body Idea idea);
+    Call<Some> addMarker(@Body Idea idea);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://10.91.50.100:5000")

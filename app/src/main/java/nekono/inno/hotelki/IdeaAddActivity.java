@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ekaterina on 4/8/18.
@@ -42,7 +46,25 @@ public class IdeaAddActivity extends Activity {
         Log.d("IDEA",idea.getName() + idea.getLat() + idea.getLng());
         Api api = Api.retrofit.create(Api.class);
 
-//        api.addMarker(idea);
+        Call<Some> some = api.addMarker(idea);
+
+
+        some.enqueue(new Callback<Some>() {
+            @Override
+            public void onResponse(Call<Some> call, Response<Some> response) {
+                Log.d("CLIENTSERVER", response.body().toString());
+
+                Some idea = response.body();
+
+            }
+
+
+            @Override
+            public void onFailure(Call<Some> call, Throwable t) {
+                Log.d("CLIENTSERVER", t.toString());
+
+            }
+        });
 
         this.finish();
     }

@@ -35,6 +35,16 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.IdeasViewHol
         Idea idea = ideasList.get(position);
 
         holder.nameTextView.setText(idea.getName().toString());
+        if(idea.getApproved() == 0){
+            holder.statusTextView.setText("Отказано");
+        }else  if(idea.getApproved() == 1){
+            holder.statusTextView.setText("Не рассмотрено");
+        }else if(idea.getApproved() == 2){
+            holder.statusTextView.setText("На рассмотрении");
+        }else if(idea.getApproved() == 3){
+            holder.statusTextView.setText("Принято");
+        }
+
         holder.statusTextView.setText(String.valueOf(idea.getApproved()));
         holder.descriptionTextView.setText(String.valueOf(idea.getDescription()));
     }
